@@ -152,7 +152,7 @@
         <dependency>
             <groupId>io.trino</groupId>
             <artifactId>trino-jdbc</artifactId>
-            <version>407</version>
+            <version>422</version>
         </dependency>
     </dependencies>
     <build>

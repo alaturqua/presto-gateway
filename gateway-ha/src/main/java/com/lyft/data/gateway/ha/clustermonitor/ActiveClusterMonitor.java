@@ -51,6 +51,8 @@ public class ActiveClusterMonitor implements Managed {
 
   private volatile boolean monitorActive = true;
   private final String jwt;
+  private final String trinoUsername;
+  private final String trinoPassword;
   private final boolean isUseJwt;
   private int jdbcPort;
   private boolean jdbcUseSsl;
@@ -75,9 +77,13 @@ public class ActiveClusterMonitor implements Managed {
       }
       this.jwt = monitorConfiguration.getJwt();
       this.isUseJwt = true;
+      this.trinoUsername = monitorConfiguration.getTrinoUsername();
+      this.trinoPassword = monitorConfiguration.getTrinoPassword();
     } else {
       this.isUseJwt = false;
       this.jwt = "";
+      this.trinoUsername = monitorConfiguration.getTrinoUsername();
+      this.trinoPassword = monitorConfiguration.getTrinoPassword();
     }
     this.jdbcPort = monitorConfiguration.getJdbcPort();
     this.jdbcUseSsl = monitorConfiguration.isJdbcUseSsl();
@@ -181,7 +187,8 @@ public class ActiveClusterMonitor implements Managed {
     }
     Properties connectionProperties = new Properties();
     if (isUseJwt) {
-      connectionProperties.setProperty("accessToken", jwt);
+      connectionProperties.setProperty("user", trinoUsername);
+      connectionProperties.setProperty("password", trinoPassword);
     }
     connectionProperties.setProperty("SSL", Boolean.toString(jdbcUseSsl));
 

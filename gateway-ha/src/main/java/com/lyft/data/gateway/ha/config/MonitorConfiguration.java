@@ -11,4 +11,6 @@ public class MonitorConfiguration {
   private boolean useJwtAuth = false;
   private int jdbcPort = 443;
   private boolean jdbcUseSsl;
+  private String trinoUsername;
+  private String trinoPassword;
 }
